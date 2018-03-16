@@ -4,7 +4,7 @@ utilpath = sys.path[0] + "/../util/"
 sys.path.append(utilpath)
 
 from gtp_connection import GtpConnection  
-from board_util import GoBoardUtil
+from board_util2 import GoBoardUtil2 as GoBoardUtil
 from simple_board import SimpleGoBoard
 from ucb import runUcb
 import numpy as np
@@ -73,7 +73,8 @@ class Go3Player(object):
                 limit=self.limit,
                 random_simulation = self.random_simulation,
                 use_pattern = self.use_pattern,
-                check_selfatari= self.check_selfatari)
+                check_selfatari= self.check_selfatari,
+                last_move = board.last_move)
 
     def simulateMove(self, board, cboard, move, toplay):
         wins = 0
