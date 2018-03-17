@@ -24,7 +24,7 @@ class GoBoardUtil2(GoBoardUtil):
         all_defense_moves = []
         threatened_stones = [] #TODO, find the stones that are a neighbour to the last_move which are now part of a block that is in atari
         #FIND THREATENED STONES STARTS HERE
-        neighbors = self._neighbors(last_move)
+        neighbors = board._neighbors(last_move)
         for n in neighbors:
             if board[n] == board.current_player:
                 threatened_stones.append(n)
