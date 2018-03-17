@@ -37,7 +37,7 @@ class GoBoardUtil2(GoBoardUtil):
         return winner    
 
     @staticmethod
-    def generate_atari_capture_moves(board, last_move):
+    def generate_atari_capture_move(board, last_move):
         opponent = GoBoardUtil2.opponent(board.current_player)
         num_liberties, atari_point = board._liberty_point(last_move, opponent)
         if num_liberties == 1:
@@ -54,10 +54,12 @@ class GoBoardUtil2(GoBoardUtil):
         """
         last_move = board.last_move
         if last_move != None:
-            atari_capture_point = GoBoardUtil2.generate_atari_capture_moves(board, last_move)
-            if atari_capture_point != None:
-                print(atari_capture_point)
-                print(board._point_to_coord(atari_capture_point))
+            atari_capture_list =[]
+            atari_capture_point = GoBoardUtil2.generate_atari_capture_move(board, last_move)
+            atari_capture_list.append(atari_capture_point)
+            atari_capture_list = GoBoardUtil2.filter_moves(board, atari_capture_list, check_selfatari)
+            if atari_capture_list != None:
+                return atari_capture_point, "Atari Capture"
         if pattern:
             pattern_moves = []
             pattern_moves = GoBoardUtil2.generate_pattern_moves(board)
