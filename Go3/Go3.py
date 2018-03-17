@@ -5,7 +5,6 @@ sys.path.append(utilpath)
 
 from gtp_connection_go3 import GtpConnectionGo3  
 from board_util2 import GoBoardUtil2 as GoBoardUtil
->>>>>>> 3b5bdab427aee6902056202555e9a0049555a0fa
 from simple_board import SimpleGoBoard
 from ucb import runUcb
 import numpy as np
