@@ -65,13 +65,14 @@ class GoBoardUtil2(GoBoardUtil):
         if last_move != None:
             atari_capture_list =[]
             atari_capture_point = GoBoardUtil2.generate_atari_capture_move(board, last_move)
-            atari_capture_list.append(atari_capture_point)
-            atari_capture_list = GoBoardUtil2.filter_moves(board, atari_capture_list, check_selfatari)
+            if atari_capture_point != None:
+                atari_capture_list.append(atari_capture_point)
+                atari_capture_list = GoBoardUtil2.filter_moves(board, atari_capture_list, check_selfatari)
 
-            if len(atari_capture_list) > 0:
-                return atari_capture_list, "AtariCapture"
+                if len(atari_capture_list) > 0:
+                    return atari_capture_list, "AtariCapture"
             atari_defense_moves = GoBoardUtil2.generate_all_atari_defense_moves(board, last_move)
-            atari_defense_moves = GoBoardUtil2.filter_moves(board, atart_defense_moves, check_selfatari)
+            atari_defense_moves = GoBoardUtil2.filter_moves(board, atari_defense_moves, check_selfatari)
             if len(atari_defense_moves) > 0:
                 return atari_defense_moves, "AtariDefense"
         return GoBoardUtil.generate_all_policy_moves(board, pattern, check_selfatari)
