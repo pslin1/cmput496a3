@@ -24,14 +24,14 @@ class GtpConnectionGo3(gtp_connection.GtpConnection):
         """
         gtp_connection.GtpConnection.__init__(self, go_engine, board, outfile, debug_mode)
         self.go_engine.con = self
-        self.commands["policy_moves"] = self.policymoves_cmd
+        self.commands["policy_moves"] = self.policy_moves_cmd
 
-    def policymoves_cmd(self, args):
+    def policy_moves_cmd(self, args):
         """
         Return list of policy moves for the current_player of the board
         """
-        
-        policy_moves, type_of_move = GoBoardUtil.generate_all_policy_moves(self.board,
+
+        policy_moves, type_of_move = GoBoardUtil2.generate_all_policy_moves(self.board,
                                                         self.go_engine.use_pattern,
                                                         self.go_engine.check_selfatari)
         if len(policy_moves) == 0:

@@ -9,6 +9,7 @@ class GoBoardUtil2(GoBoardUtil):
         move = None
         if use_pattern:
             # implement our filters here
+            generate_atari_capture_moves(board, last_move)
             pass
         GoBoardUtil.generate_move_with_filter(board, use_pattern, check_selfatari)
         
@@ -34,3 +35,33 @@ class GoBoardUtil2(GoBoardUtil):
             color = GoBoardUtil2.opponent(color)
         winner,_ = board.score(komi)  
         return winner    
+
+    @staticmethod
+    def generate_atari_capture_moves(board, last_move):
+        opponent = GoBoardUtil2.opponent(board.current_player)
+        num_liberties, atari_point = board._liberty_point(last_move, opponent)
+        if num_liberties == 1:
+            return atari_point
+        else:
+            return None
+
+    @staticmethod
+    def generate_all_policy_moves(board,pattern,check_selfatari):
+        """
+            generate a list of policy moves on board for board.current_player.
+            Use in UI only. For playing, use generate_move_with_filter
+            which is more efficient
+        """
+        last_move = board.last_move
+        if last_move != None:
+            atari_capture_point = GoBoardUtil2.generate_atari_capture_moves(board, last_move)
+            if atari_capture_point != None:
+                print(atari_capture_point)
+                print(board._point_to_coord(atari_capture_point))
+        if pattern:
+            pattern_moves = []
+            pattern_moves = GoBoardUtil2.generate_pattern_moves(board)
+            pattern_moves = GoBoardUtil2.filter_moves(board, pattern_moves, check_selfatari)
+            if len(pattern_moves) > 0:
+                return pattern_moves, "Pattern"
+        return GoBoardUtil.generate_random_moves(board,True), "Random"
