@@ -28,7 +28,9 @@ class GoBoardUtil2(GoBoardUtil):
             capture_adjacent_stones_moves = GoBoardUtil2.generate_neighbour_captures(board, stone)
             if run_away_move:
                 capture_adjacent_stones_moves.append(run_away_move)
-            all_defense_moves.extend(capture_adjacent_stones_moves)
+            for move in capture_adjacent_stones_moves:
+                if move not in all_defense_moves:
+                    all_defense_moves.append(move)
         return all_defense_moves
     
     @staticmethod
