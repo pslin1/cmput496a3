@@ -4,13 +4,14 @@ class GoBoardUtil2(GoBoardUtil):
     
     @staticmethod
     def generate_move_with_filter(board, use_pattern, check_selfatari):
-        move = GoBoardUtil2.generate_atari_capture_move(board, board.last_move)
-        if move:
-            return move
-        move = GoBoardUtil2.generate_atari_defense_move(board, board.last_move, check_selfatari)
-        if move:
-            return move
-        GoBoardUtil.generate_move_with_filter(board, use_pattern, check_selfatari)
+        if board.last_move:
+            move = GoBoardUtil2.generate_atari_capture_move(board, board.last_move)
+            if move:
+                return move
+            move = GoBoardUtil2.generate_atari_defense_move(board, board.last_move, check_selfatari)
+            if move:
+                return move
+        return GoBoardUtil.generate_move_with_filter(board, use_pattern, check_selfatari)
         
     @staticmethod
     def generate_atari_defense_move(board, last_move, check_selfatari):
