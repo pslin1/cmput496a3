@@ -21,8 +21,26 @@ class GoBoardUtil2(GoBoardUtil):
     
     @staticmethod
     def generate_all_atari_defense_moves(board, last_move):
+        all_defense_moves = []
+        threatened_stones = [] #TODO, find the stones that are a neighbour to the last_move which are now part of a block that is in atari
+        for stone in threatened_stones:
+            run_away_move = GoBoardUtil2.generate_run_away_move(board, stone)
+            capture_adjacent_stones_moves = GoBoardUtil2.generate_neighbour_captures(board, stone)
+            if run_away_move:
+                capture_adjacent_stones_moves.append(run_away_move)
+            all_defense_moves.extend(capture_adjacent_stones_moves)
+        return all_defense_moves
+    
+    @staticmethod
+    def generate_run_away_move(board, stone):
+        #TODO determine if taking the last liberty of the block that contains the threatened stone results in 2+ liberties for the block
+        return None
+    
+    @staticmethod
+    def generate_neighbour_captures(board, stone):
+        #TODO determine if the block that contains the threatened stone has neighbours which can be captured and return a list of such moves
         return []
-        
+    
     @staticmethod
     def playGame(board, color, **kwargs):
         komi = kwargs.pop('komi', 0)
