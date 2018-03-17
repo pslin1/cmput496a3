@@ -46,13 +46,29 @@ class GoBoardUtil2(GoBoardUtil):
     
     @staticmethod
     def generate_run_away_move(board, stone):
-        #TODO determine if taking the last liberty of the block that contains the threatened stone results in 2+ liberties for the block
+        for n in board.neighbors_dic[stone]:
+            if board.board[n] == EMPTY:
+                board_copy = board.copy()
+                board_copy.move(n, board.current_player)
+                num_liberties, atari_point = board._liberty_point(n, board.current_player)
+                if num_liberties >= 2:
+                    return n
         return None
     
     @staticmethod
     def generate_neighbour_captures(board, stone):
-        #TODO determine if the block that contains the threatened stone has neighbours which can be captured and return a list of such moves
-        return []
+        # determine if the threatened stone's neighbours are the opponent colour
+        # if they are, determine if that adjacent stone's block is in atari and which move will capture it
+        capture_moves = []
+        neighbours = board.neighbors_dic[stone]
+        colour = board.current_player
+        opponent = GoBoardUtil.opponent(colour)
+        for n in neighbours:
+            num_liberties, atari_point = board._liberty_point(n, opponent)
+            if board.board[n] == opponent and num_liberties == 1:
+                if atari_point not in capture_moves:
+                    capture_moves.append(atari_point)
+        return capture_moves
     
     @staticmethod
     def playGame(board, color, **kwargs):
