@@ -49,7 +49,7 @@ class GoBoardUtil2(GoBoardUtil):
     def generate_atari_capture_move(board, last_move):
         opponent = GoBoardUtil2.opponent(board.current_player)
         num_liberties, atari_point = board._liberty_point(last_move, opponent)
-        if num_liberties == 1:
+        if num_liberties == 1 and board.check_legal(atari_point, board.current_player):
             return atari_point
         else:
             return None
@@ -68,7 +68,6 @@ class GoBoardUtil2(GoBoardUtil):
             if atari_capture_point != None:
                 atari_capture_list.append(atari_capture_point)
                 atari_capture_list = GoBoardUtil2.filter_moves(board, atari_capture_list, check_selfatari)
-
                 if len(atari_capture_list) > 0:
                     return atari_capture_list, "AtariCapture"
             atari_defense_moves = GoBoardUtil2.generate_all_atari_defense_moves(board, last_move)
