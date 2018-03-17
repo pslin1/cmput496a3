@@ -3,14 +3,13 @@ from board_util import GoBoardUtil
 class GoBoardUtil2(GoBoardUtil):
     
     @staticmethod
-    def generate_move_with_filter(board, use_pattern, check_selfatari, last_move):
+    def generate_move_with_filter(board, use_pattern, check_selfatari):
         # last_move is the single point representation of the last move taken
         # needs to be converted to x,y or formatted if necessary
         move = None
         if use_pattern:
             # implement our filters here
-            generate_atari_capture_moves(board, last_move)
-            pass
+            GoBoardUtil2.generate_atari_capture_moves(board, board.last_move)
         GoBoardUtil.generate_move_with_filter(board, use_pattern, check_selfatari)
         
     @staticmethod
@@ -20,14 +19,13 @@ class GoBoardUtil2(GoBoardUtil):
         random_simulation = kwargs.pop('random_simulation',True)
         use_pattern = kwargs.pop('use_pattern',True)
         check_selfatari = kwargs.pop('check_selfatari',True)
-        last_move = kwargs.pop('last_move', None)
         if kwargs:
             raise TypeError('Unexpected **kwargs: %r' % kwargs)
         for _ in range(limit):
             if random_simulation:
                 move = GoBoardUtil2.generate_random_move(board,color,True)
             else:
-                move = GoBoardUtil2.generate_move_with_filter(board,use_pattern,check_selfatari,last_move)
+                move = GoBoardUtil2.generate_move_with_filter(board,use_pattern,check_selfatari)
             isLegalMove = board.move(move,color)
             assert isLegalMove
             if board.end_of_game():
