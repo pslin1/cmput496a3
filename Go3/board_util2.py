@@ -26,12 +26,12 @@ class GoBoardUtil2(GoBoardUtil):
         #FIND THREATENED STONES STARTS HERE
         neighbors = board._neighbors(last_move)
         for n in neighbors:
-            if board[n] == board.current_player:
+            if board.board[n] == board.current_player and board._single_liberty(n, board.current_player) != None:
                 threatened_stones.append(n)
         for p in threatened_stones:
             adjacent = board._neighbors(p)
             for s in adjacent:
-                if s not in threatened_stones and board[s] == board.current_player:
+                if s not in threatened_stones and board.board[s] == board.current_player:
                     threatened_stones.append(s)
         #FIND THREATENED STONES ENDS HERE
         for stone in threatened_stones:
