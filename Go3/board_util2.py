@@ -4,13 +4,23 @@ class GoBoardUtil2(GoBoardUtil):
     
     @staticmethod
     def generate_move_with_filter(board, use_pattern, check_selfatari):
-        # last_move is the single point representation of the last move taken
-        # needs to be converted to x,y or formatted if necessary
-        move = None
-        if use_pattern:
-            # implement our filters here
-            GoBoardUtil2.generate_atari_capture_moves(board, board.last_move)
+        move = GoBoardUtil2.generate_atari_capture_moves(board, board.last_move)
+        if move:
+            return move
+        move = GoBoardUtil2.generate_atari_defense_move(board, board.last_move, check_selfatari)
+        if move:
+            return move
         GoBoardUtil.generate_move_with_filter(board, use_pattern, check_selfatari)
+        
+    @staticmethod
+    def generate_atari_defense_move(board, last_move, check_selfatari):
+        moves = GoBoardUtil2.generate_all_atari_defense_moves(board, last_move)
+        move = GoBoardUtil2.filter_moves_and_generate(board, moves, check_selfatari)   
+        return move
+    
+    @staticmethod
+    def generate_all_atari_defense_moves(board, last_move):
+        return []
         
     @staticmethod
     def playGame(board, color, **kwargs):
