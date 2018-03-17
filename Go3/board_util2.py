@@ -23,6 +23,15 @@ class GoBoardUtil2(GoBoardUtil):
     def generate_all_atari_defense_moves(board, last_move):
         all_defense_moves = []
         threatened_stones = [] #TODO, find the stones that are a neighbour to the last_move which are now part of a block that is in atari
+        neighbors = self._neighbors(last_move)
+        for n in neighbors:
+            if self.board[n] != BORDER and self.board[n] == board.current_player:
+                threatened_stones.append(n)
+        for p in threatened_stones:
+            adjacent = self._neighbors(p)
+                for s in adjacent_stone:
+                    if s not in threatened_stones:
+                        threatened_stones.append(s)
         for stone in threatened_stones:
             run_away_move = GoBoardUtil2.generate_run_away_move(board, stone)
             capture_adjacent_stones_moves = GoBoardUtil2.generate_neighbour_captures(board, stone)
