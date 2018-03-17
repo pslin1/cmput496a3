@@ -56,8 +56,8 @@ class GoBoardUtil2(GoBoardUtil):
             atari_capture_point = GoBoardUtil2.generate_atari_capture_move(board, last_move)
             atari_capture_list.append(atari_capture_point)
             atari_capture_list = GoBoardUtil2.filter_moves(board, atari_capture_list, check_selfatari)
-            if atari_capture_list != None:
-                return atari_capture_point, "Atari Capture"
+            if len(atari_capture_list) != 0:
+                return atari_capture_list, "Atari Capture"
         if pattern:
             pattern_moves = []
             pattern_moves = GoBoardUtil2.generate_pattern_moves(board)
