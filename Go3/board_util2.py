@@ -1,4 +1,4 @@
-from board_util import GoBoardUtil
+from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, FLOODFILL
 
 class GoBoardUtil2(GoBoardUtil):
     
@@ -26,13 +26,13 @@ class GoBoardUtil2(GoBoardUtil):
         #FIND THREATENED STONES STARTS HERE
         neighbors = self._neighbors(last_move)
         for n in neighbors:
-            if self.board[n] != BORDER and self.board[n] == board.current_player:
+            if board[n] == board.current_player:
                 threatened_stones.append(n)
         for p in threatened_stones:
-            adjacent = self._neighbors(p)
-                for s in adjacent_stone:
-                    if s not in threatened_stones:
-                        threatened_stones.append(s)
+            adjacent = board._neighbors(p)
+            for s in adjacent:
+                if s not in threatened_stones and board[s] == board.current_player:
+                    threatened_stones.append(s)
         #FIND THREATENED STONES ENDS HERE
         for stone in threatened_stones:
             run_away_move = GoBoardUtil2.generate_run_away_move(board, stone)
