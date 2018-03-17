@@ -73,8 +73,7 @@ class Go3Player(object):
                 limit=self.limit,
                 random_simulation = self.random_simulation,
                 use_pattern = self.use_pattern,
-                check_selfatari= self.check_selfatari,
-                last_move = board.last_move)
+                check_selfatari= self.check_selfatari)
 
     def simulateMove(self, board, cboard, move, toplay):
         wins = 0
